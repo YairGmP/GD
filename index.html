@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galetics Developers - Desarrollo Web y Servicios Tecnológicos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a1a35;
+            --secondary: #1a3a6c;
+            --accent: #4a90e2;
+            --light: #e6f0ff;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #0a1a35 0%, #1a3a6c 100%);
+            --space-gradient: linear-gradient(135deg, #0a1a35 0%, #1a3a6c 50%, #4a90e2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--white);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 20px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #3a80d2;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Header */
+        header {
+            background: var(--gradient);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--space-gradient);
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><circle cx="20" cy="20" r="1" fill="white" opacity="0.7"/><circle cx="80" cy="40" r="0.8" fill="white" opacity="0.5"/><circle cx="40" cy="80" r="1.2" fill="white" opacity="0.6"/><circle cx="70" cy="70" r="0.5" fill="white" opacity="0.4"/><circle cx="10" cy="60" r="0.9" fill="white" opacity="0.5"/></svg>');
+            background-size: 200px 200px;
+            animation: stars 20s linear infinite;
+        }
+        
+        @keyframes stars {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        /* Services Section */
+        .services {
+            background-color: var(--primary);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: var(--secondary);
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        /* Projects Section */
+        .projects {
+            background-color: var(--secondary);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: var(--primary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(74, 144, 226, 0.3);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: linear-gradient(45deg, #1a3a6c, #4a90e2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 26, 53, 0.7);
+        }
+        
+        .project-image-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .project-content {
+            padding: 25px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .tech-tag {
+            background: var(--accent);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--gradient);
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: var(--secondary);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            color: var(--accent);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .project-links a {
+            background: var(--accent);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .project-links a:hover {
+            background: #3a80d2;
+            transform: translateY(-2px);
+        }
+        
+        .project-features {
+            margin: 20px 0;
+        }
+        
+        .project-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .project-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .project-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* Preview Section */
+        .preview-section {
+            margin: 25px 0;
+            background: var(--primary);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(74, 144, 226, 0.2);
+        }
+        
+        .preview-placeholder {
+            height: 200px;
+            background: linear-gradient(45deg, #0a1a35, #1a3a6c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: var(--accent);
+            font-weight: 600;
+            border: 2px dashed var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .project-links {
+                justify-content: center;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">Galetics<span>Developers</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h1>Desarrollo Web y Soluciones Tecnológicas</h1>
+            <p>En Galetics Developers creamos soluciones digitales accesibles y profesionales. Ofrecemos desde desarrollo web hasta soporte técnico integral para impulsar tu presencia digital.</p>
+            <a href="#contacto" class="btn">Contáctanos</a>
+            <div style="margin-top: 30px; font-size: 1.2rem;">
+                <p>
+                    <i class="fas fa-phone" style="margin-right: 10px;"></i>
+                    Teléfono: 9841508361
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="services">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Creación de sitios web responsivos y optimizados, desde landing pages hasta portales más complejos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>Diseño UI/UX</h3>
+                    <p>Diseños intuitivos y atractivos que mejoran la experiencia del usuario.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Mantenimiento Web</h3>
+                    <p>Servicios de actualización, optimización y mantenimiento para tu sitio web.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-laptop"></i></div>
+                    <h3>Mantenimiento de Equipos</h3>
+                    <p>Reparación, actualización y mantenimiento preventivo de equipos de cómputo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-camera"></i></div>
+                    <h3>Instalación de Cámaras</h3>
+                    <p>Instalación y configuración de sistemas de videovigilancia.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Asesoramiento, formateo e implementación de tecnologías.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyectos" class="projects">
+        <div class="container">
+            <h2 class="section-title">Nuestros Proyectos</h2>
+            <div class="projects-grid">
+                <!-- Proyectos se generan con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Galetics Developers</h3>
+                    <p>Desarrollo web accesible y profesional para llevar tu negocio al siguiente nivel digital.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul style="list-style: none;">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#proyectos">Proyectos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone" style="margin-right: 10px;"></i>9841508361</p>
+                    <p><i class="fab fa-whatsapp" style="margin-right: 10px;"></i>WhatsApp: 9841508361</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Galetics Developers. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Datos de proyectos con links corregidos
+        const projects = [
+            {
+                id: 1,
+                title: "Time Fit - Landing Page",
+                description: "Landing page moderna para aplicación de fitness con diseño responsivo y atractivo visualmente. Desarrollada con las últimas tecnologías web para optimizar la conversión de usuarios.",
+                image: "🏋️ Time Fit",
+                icon: "fas fa-dumbbell",
+                tech: ["React", "CSS3", "Responsive"],
+                features: ["Diseño moderno y atractivo", "Completamente responsive", "Optimizada para SEO", "Animaciones fluidas"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://landing-page-time-fit.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Time Fit - Web App",
+                description: "Aplicación web completa para gestión de rutinas de ejercicio y seguimiento de progreso físico. Incluye sistema de usuarios, rutinas personalizadas y analytics.",
+                image: "📱 Time Fit App",
+                icon: "fas fa-mobile-alt",
+                tech: ["React", "Node.js", "MongoDB"],
+                features: ["Sistema de usuarios", "Rutinas personalizadas", "Seguimiento de progreso", "Interfaz intuitiva"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://time-fit-web-app-flax.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Mike Psicólogo",
+                description: "Sitio web profesional para psicólogo con sistema de citas online y blog integrado. Colaboramos en el desarrollo frontend de este proyecto.",
+                image: "🧠 Mike Psicólogo",
+                icon: "fas fa-brain",
+                tech: ["HTML5", "CSS3", "JavaScript"],
+                features: ["Sistema de citas online", "Blog integrado", "Diseño profesional", "Multidioma"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://mikepsicologo.com", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 4,
+                title: "SpotifAPI React",
+                description: "Aplicación que consume la API de Spotify para mostrar información de artistas, álbumes y canciones. Interfaz moderna y funcionalidades avanzadas.",
+                image: "🎵 SpotifAPI",
+                icon: "fas fa-music",
+                tech: ["React", "API REST", "CSS Modules"],
+                features: ["Conexión con API Spotify", "Búsqueda avanzada", "Interfaz moderna", "Responsive design"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://spotifapi-react.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 5,
+                title: "Biblioteca Virtual Móvil",
+                description: "Aplicación móvil para gestión de biblioteca virtual con interfaz intuitiva y funcionalidades completas de préstamo y devolución.",
+                image: "📚 Biblioteca Virtual",
+                icon: "fas fa-book",
+                tech: ["React Native", "Firebase", "Mobile"],
+                features: ["Interfaz móvil optimizada", "Sistema de préstamos", "Catálogo digital", "Notificaciones"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://virtual-library-mobile-react-native.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 6,
+                title: "Tu Mundo Dev",
+                description: "Plataforma para desarrolladores con herramientas, recursos y comunidad para mejorar habilidades de programación.",
+                image: "💻 Tu Mundo Dev",
+                icon: "fas fa-laptop-code",
+                tech: ["React", "Vite", "JavaScript"],
+                features: ["Comunidad de desarrolladores", "Recursos educativos", "Herramientas útiles", "Foro de discusión"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://tu-mundo-dev-react-vite-js.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 7,
+                title: "Chrome Go App",
+                description: "Aplicación móvil para navegación web optimizada con funciones personalizadas y experiencia de usuario mejorada.",
+                image: "🌐 Chrome Go",
+                icon: "fas fa-globe",
+                tech: ["React Native", "Mobile", "JavaScript"],
+                features: ["Navegación optimizada", "Interfaz móvil", "Funciones personalizadas", "Rendimiento mejorado"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://mobile-app-chrome-go.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 8,
+                title: "Recipe Page",
+                description: "Página de recetas con diseño atractivo y funcionalidades avanzadas de búsqueda, filtrado y categorización.",
+                image: "🍳 Recipe Page",
+                icon: "fas fa-utensils",
+                tech: ["HTML5", "CSS3", "JavaScript"],
+                features: ["Diseño atractivo", "Búsqueda avanzada", "Sistema de filtros", "Categorización"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://recipe-page-main-nort17dev.onrender.com", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 9,
+                title: "Recetario",
+                description: "Plataforma educativa moderna con sistema de clases online, seguimiento de progreso y herramientas de aprendizaje.",
+                image: "🍳 Recipe Page",
+                icon: "fas fa-utensils",
+                tech: ["React", "Vite", "CSS3"],
+                features: ["Clases online", "Seguimiento de progreso", "Herramientas educativas", "Interfaz moderna"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://class-react-with-vite-i3sx.vercel.app", icon: "fas fa-external-link-alt" }
+                ]
+            },
+            {
+                id: 10,
+                title: "SAM",
+                description: "Portafolio personal con diseño moderno y presentación profesional de proyectos desarrollados.",
+                image: "👨‍💻 Portafolio Personal",
+                icon: "fas fa-user-tie",
+                tech: ["React", "CSS3", "Responsive"],
+                features: ["Diseño moderno", "Presentación profesional", "Responsive design", "Navegación intuitiva"],
+                links: [
+                    { name: "Ver Proyecto", url: "https://sam-omega-one.vercel.app/", icon: "fas fa-external-link-alt" }
+                ]
+            }
+        ];
+
+        // Generar proyectos en el DOM
+        const projectsGrid = document.querySelector('.projects-grid');
+        
+        projects.forEach(project => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            projectCard.innerHTML = `
+                <div class="project-image">
+                    <div class="project-image-content">
+                        <div class="project-icon">
+                            <i class="${project.icon}"></i>
+                        </div>
+                        <h3>${project.image}</h3>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>${project.title}</h3>
+                    <p>${project.description.substring(0, 120)}...</p>
+                    <div class="project-tech">
+                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    <button class="btn" onclick="openModal(${project.id})">
+                        <i class="fas fa-eye"></i> Ver Detalles
+                    </button>
+                </div>
+            `;
+            projectsGrid.appendChild(projectCard);
+        });
+
+        // Funcionalidad del modal mejorado
+        function openModal(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>${project.title}</h3>
+                        <button class="close-btn" onclick="closeModal()">×</button>
+                    </div>
+                    
+                    <div class="project-tech">
+                        ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    
+                    <p>${project.description}</p>
+                    
+                    <div class="project-features">
+                        <h4>Características principales:</h4>
+                        <ul>
+                            ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="preview-section">
+                        <h4>Vista previa del proyecto:</h4>
+                        <div class="preview-placeholder">
+                            <i class="${project.icon}" style="font-size: 2rem; margin-right: 10px;"></i>
+                            ${project.image} - Preview
+                        </div>
+                    </div>
+                    
+                    <div class="project-links">
+                        ${project.links.map(link => 
+                            `<a href="${link.url}" target="_blank" rel="noopener noreferrer">
+                                <i class="${link.icon}"></i> ${link.name}
+                            </a>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Cerrar modal con ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.remove();
+            }
+            document.removeEventListener('keydown', closeModal);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if(window.scrollY > 100) {
+                header.style.backgroundColor = 'var(--primary)';
+            } else {
+                header.style.backgroundColor = 'var(--gradient)';
+            }
+        });
+    </script>
+</body>
+</html>
